@@ -1,7 +1,6 @@
-import logging
-
-import requests
 import bs4
+import requests
+
 from . import htmlparser
 from . import sink
 
