@@ -7,18 +7,31 @@ from . import sink
 
 
 def run():
+    area_config = [
+        # ('xihu', '西湖区'),
+        ('xiacheng', '下城区'),
+        ('jianggan', '江干区'),
+        ('gongshu', '拱墅区'),
+        ('shangcheng', '上城区'),
+        ('binjiang', '滨江'),
+        ('yuhang', '余杭区'),
+        ('xiaoshan', '萧山区'),
+    ]
 
-    for page in range(1, 120):
+    for area in area_config:
+        for page in range(1, 120):
 
-        url = 'http://hz.lianjia.com/ershoufang/pg%d/' % (page,)
-        print('getting:', url)
-        content = requests.get(url).content
+            url = 'http://hz.lianjia.com/ershoufang/%s/pg%d/' % (area[0], page)
 
-        bs = bs4.BeautifulSoup(content, 'html5lib')
+            content = requests.get(url).content
 
-        s = bs.select('ul.listContent li.clear')
+            bs = bs4.BeautifulSoup(content, 'html5lib')
 
-        output = sink.MysqlSink()
-        for item in s:
-            data = htmlparser.LianjiaParser().parse(item)
-            output.sink(data)
+            s = bs.select('ul.listContent li.clear')
+
+            print('getting:', len(s), url)
+            output = sink.MysqlSink()
+            for item in s:
+                data = htmlparser.LianjiaParser().parse(item)
+                data['area'] = area[1]
+                output.sink(data)

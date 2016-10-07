@@ -46,7 +46,7 @@ class LianjiaParser():
         data = dict(zip(fields, values))
         return data
 
-    POSITION_REG = re.compile(r'.楼层\(共(.+)层\)\s+(((\d+)年)?(.+))?\s*-\s+(.+)')
+    POSITION_REG = re.compile(r'.+\(共(.+)层\)\s+(((\d+)年)?(.+))?\s*-\s+(.+)')
 
     def parse_position_info(self, positionInfo):
         try:
@@ -59,12 +59,15 @@ class LianjiaParser():
         except Exception as e:
             logging.error("parse_position_info:%s", str(positionInfo), e)
 
-    FOLLOW_REG = re.compile(r'(\d+)人关注 / 共(\d+)次带看 / (.+以前发布)')
+    FOLLOW_REG = re.compile(r'(\d+)人关注 / 共(\d+)次带看 / (.+发布)')
 
     def parse_follow_info(self, followInfo):
-        text = followInfo.get_text()
+        try:
+            text = followInfo.get_text()
 
-        match = self.FOLLOW_REG.match(text)
-        fields = ['follow', 'visit', 'publishBefore']
-        values = match.groups()
-        return dict(zip(fields, values))
+            match = self.FOLLOW_REG.match(text)
+            fields = ['follow', 'visit', 'publishBefore']
+            values = match.groups()
+            return dict(zip(fields, values))
+        except Exception as e:
+            logging.error("parse_position_info:%s", str(followInfo.get_text()), e)
