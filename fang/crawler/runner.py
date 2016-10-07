@@ -15,7 +15,7 @@ def setup_env():
 
 setup_env()
 
-import house.models as models
-
 if __name__ == "__main__":
-    houses = models.OldHouse.objects.all()
+    from fang.crawler import crawler
+
+    crawler.run()
