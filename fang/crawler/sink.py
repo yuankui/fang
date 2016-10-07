@@ -11,7 +11,6 @@ class MysqlSink:
         for field in fields:
             setattr(house, field.attname, data[field.attname])
 
-        print(house)
         house.save()
 
     def flat(self, data):

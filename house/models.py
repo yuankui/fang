@@ -16,6 +16,9 @@ class OldHouse(models.Model):
     price = models.IntegerField(null=True)
     title = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=100, null=True)
+    visit = models.IntegerField(null=True)
+    follow = models.IntegerField(null=True)
+    publishBefore = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.title
