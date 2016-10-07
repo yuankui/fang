@@ -8,7 +8,7 @@ from . import sink
 
 def run():
     area_config = [
-        # ('xihu', '西湖区'),
+        ('xihu', '西湖区'),
         ('xiacheng', '下城区'),
         ('jianggan', '江干区'),
         ('gongshu', '拱墅区'),
