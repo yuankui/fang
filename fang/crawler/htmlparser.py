@@ -28,10 +28,14 @@ class LianjiaParser():
         price = self.NUM_REGEX.findall(price)[0]
         data['price'] = float(price)
 
+        pos = data['positionInfo']
+        pos['totalFloor'] = int(pos['totalFloor'])
+        pos['year'] = int(pos['year']) if pos['year'] is not None else None
+
     def parse_house_info(self, houseInfo):
         text = houseInfo.get_text()
         values = text.split(r'|')
-        fields = ['community', '_', 'size', 'direction', 'decoration', 'with_lift']
+        fields = ['community', '_', 'size', 'direction', 'decoration', 'withLift']
         data = dict(zip(fields, values))
         return data
 
